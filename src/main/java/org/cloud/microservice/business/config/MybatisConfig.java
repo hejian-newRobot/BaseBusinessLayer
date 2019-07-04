@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -28,9 +29,9 @@ import java.util.List;
  *
  * @author hejian
  */
-@Component
-@EnableConfigurationProperties(MybatisConfig.class)
-@ConfigurationProperties("ibatis.config")
+@Configuration
+@EnableConfigurationProperties(value = MybatisConfig.class)
+@ConfigurationProperties(prefix = "ibatis.config")
 public class MybatisConfig {
 
     private static Environment env = null;

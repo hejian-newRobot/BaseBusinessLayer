@@ -32,13 +32,15 @@ public class JwtConfig {
 
     @Primary
     @Scope("singleton")
-    @Bean("jjwtTokenStore")
+    @Bean("jwtTokenStore")
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
     @Bean
-    @ConditionalOnBean(name = {"jjwtTokenStore"})
+    @Primary
+    @Scope("singleton")
+    @ConditionalOnBean(name = {"jwtTokenStore"})
     protected JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         Resource resource = new ClassPathResource(pub);
