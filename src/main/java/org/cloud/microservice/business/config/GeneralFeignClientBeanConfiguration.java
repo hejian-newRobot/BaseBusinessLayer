@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 
 /**
  * 项目名称：SimpleSpringCloudGateway
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Primary;
 public class GeneralFeignClientBeanConfiguration {
 
     @Bean
+    @Scope("singleton")
     @Primary
     public SpringMvcContract springMvcContract() {
         return new SpringMvcContract();

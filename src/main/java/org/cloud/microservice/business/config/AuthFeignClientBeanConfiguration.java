@@ -28,13 +28,6 @@ import feign.RequestInterceptor;
 public class AuthFeignClientBeanConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean
-    public SpringMvcContract springMvcContract(@Autowired(required = false)
-                                                       SpringMvcContract contract) {
-        return contract == null ? new SpringMvcContract() : contract;
-    }
-
-    @Bean
     @Primary
     @Scope("singleton")
     public RequestInterceptor requestInterceptor() {
