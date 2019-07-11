@@ -30,10 +30,10 @@ import javax.sql.DataSource;
 @Configuration
 @ConditionalOnClass({MybatisConfig.class, HikariDataSource.class, SqlSessionFactory.class})
 @ConditionalOnProperty(name = "datasource.fsAppByCatering.enable", havingValue = "true", matchIfMissing = true)
-@MapperScan(basePackages = "com.service.*.*.dao", sqlSessionTemplateRef = "testDBSqlSessionTemplate")
+@MapperScan(basePackages = "fs.service.business.*.*.dao", sqlSessionTemplateRef = "testDBSqlSessionTemplate")
 public class DataSourceConfigForFsAppByCatering {
 
-    @Value("${ibatis.mapper.locations.test}")
+    @Value("${ibatis.mapper.locations.fsAppByCatering}")
     private String mapperLocations;
 
     @Bean(name = "testDB")
