@@ -1,7 +1,6 @@
 package org.cloud.microservice.business.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,21 +24,25 @@ import java.io.IOException;
 @ConfigurationProperties(prefix = "spring.security.jwt.cert")
 public class JwtConfig {
 
+    private final JwtAccessTokenConverter jwtAccessTokenConverter;
     /**
      * 公钥名称
      */
     private String pub = "public.cert";
 
+    @Autowired
+    public JwtConfig(JwtAccessTokenConverter jwtAccessTokenConverter) {
+        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+    }
+
     @Primary
     @Scope("singleton")
     @Bean("tokenStore")
-    public TokenStore tokenStore(@Qualifier("jwtTokenConverter") JwtAccessTokenConverter jwtAccessTokenConverter) {
+    public TokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter(jwtAccessTokenConverter));
     }
 
-    @Bean("jwtTokenConverter")
-    @ConditionalOnBean(name = {"tokenStore"})
-    protected JwtAccessTokenConverter jwtAccessTokenConverter(JwtAccessTokenConverter converter) {
+    private JwtAccessTokenConverter jwtAccessTokenConverter(JwtAccessTokenConverter converter) {
         Resource resource = new ClassPathResource(pub);
         String publicKey;
         try {
