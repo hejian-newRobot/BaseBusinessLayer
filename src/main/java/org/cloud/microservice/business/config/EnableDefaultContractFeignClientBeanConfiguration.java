@@ -1,4 +1,4 @@
-package org.cloud.microservice.business;
+package org.cloud.microservice.business.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
