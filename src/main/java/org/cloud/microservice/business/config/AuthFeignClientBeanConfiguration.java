@@ -39,4 +39,11 @@ public class AuthFeignClientBeanConfiguration {
     public Feign.Builder feignBuilder(RequestInterceptor requestInterceptor) {
         return Feign.builder().requestInterceptor(requestInterceptor);
     }
+
+    @Bean
+    @Scope("singleton")
+    @Primary
+    public SpringMvcContract springMvcContract() {
+        return new SpringMvcContract();
+    }
 }

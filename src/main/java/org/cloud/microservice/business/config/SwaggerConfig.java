@@ -8,11 +8,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import javax.servlet.ServletContext;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.paths.RelativePathProvider;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -36,13 +39,26 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     /**
+     * swagger 信息
+     */
+    private final SwaggerInfo swaggerInfo;
+    /**
      * 是否启用Swagger
      */
     private boolean enable = true;
-
+    /**
+     * 扫描接口的路径
+     */
     private String path = "";
 
-    private final SwaggerInfo swaggerInfo;
+    /**
+     * swagger url base path 基础路径
+     */
+    private String basePath = "";
+    /**
+     * swagger host
+     */
+    private String host = "localhost:8080";
 
     @Autowired
     public SwaggerConfig(SwaggerInfo swaggerInfo) {
@@ -50,8 +66,15 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket api() {
+    public Docket api(ServletContext servletContext) {
         return new Docket(DocumentationType.SWAGGER_2)
+                .host(host)
+                .pathProvider(new RelativePathProvider(servletContext) {
+                    @Override
+                    public String getApplicationBasePath() {
+                        return basePath;
+                    }
+                })
                 .apiInfo(apiInfo())
                 .enable(enable)
                 .select()
@@ -67,6 +90,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title(swaggerInfo.getTitle())
                 .description(swaggerInfo.getDescription())
+                .termsOfServiceUrl(swaggerInfo.getTermsOfServiceUrl())
                 .version(swaggerInfo.getVersion())
                 .build();
     }
@@ -85,6 +109,22 @@ public class SwaggerConfig {
 
     public final void setPath(String path) {
         this.path = path;
+    }
+
+    public final String getBasePath() {
+        return basePath;
+    }
+
+    public final void setBasePath(String basePath) {
+        this.basePath = basePath;
+    }
+
+    public final String getHost() {
+        return host;
+    }
+
+    public final void setHost(String host) {
+        this.host = host;
     }
 
     @ConfigurationProperties(prefix = "swagger.api")
