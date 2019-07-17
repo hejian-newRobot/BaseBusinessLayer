@@ -11,7 +11,7 @@
     </parent>
     <groupId>org.cloud.microservice</groupId>
     <artifactId>business-spring-boot-starter</artifactId>
-    <version>0.0.1-RELEASE</version>
+    <version>0.0.2-RELEASE</version>
     <name>business</name>
     <packaging>jar</packaging>
     <description>A Jar-based For Micro Service Base On Spring Cloud</description>
