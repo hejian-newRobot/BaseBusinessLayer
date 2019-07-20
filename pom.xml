@@ -1,118 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>org.cloud.microservice</groupId>
     <artifactId>business-spring-boot-starter</artifactId>
-    <version>0.0.2-RELEASE</version>
-    <name>business</name>
-    <packaging>jar</packaging>
-    <description>A Jar-based For Micro Service Base On Spring Cloud</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-        <mybatis.version>1.3.2</mybatis.version>
-    </properties>
-
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.7.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>cert</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
+        </dependency>
+        <dependency>
             <artifactId>spring-boot-autoconfigure</artifactId>
+            <groupId>org.springframework.boot</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+        </dependency>
+        <dependency>
             <artifactId>mssql-jdbc</artifactId>
+            <groupId>com.microsoft.sqlserver</groupId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>org.springframework.cloud</groupId>
         </dependency>
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
+            <groupId>org.mybatis.spring.boot</groupId>
             <version>${mybatis.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <groupId>org.springframework.boot</groupId>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
             <exclusions>
                 <exclusion>
-                    <groupId>io.swagger</groupId>
                     <artifactId>swagger-annotations</artifactId>
+                    <groupId>io.swagger</groupId>
                 </exclusion>
                 <exclusion>
-                    <groupId>io.swagger</groupId>
                     <artifactId>swagger-models</artifactId>
+                    <groupId>io.swagger</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <groupId>io.springfox</groupId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
             <artifactId>swagger-annotations</artifactId>
+            <groupId>io.swagger</groupId>
             <version>1.5.21</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
+            <groupId>io.swagger</groupId>
             <version>1.5.21</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-hystrix -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <groupId>org.springframework.cloud</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
             <scope>test</scope>
         </dependency>
+        <!--避免使用java8以上版本的jdk出现找不到jax context的问题，因为这东西将会被弃用-->
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+        <dependency>
+            <artifactId>jaxb-api</artifactId>
+            <groupId>javax.xml.bind</groupId>
+            <version>2.3.0</version>
+        </dependency>
     </dependencies>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
+                <groupId>org.springframework.cloud</groupId>
                 <scope>import</scope>
+                <type>pom</type>
+                <version>${spring-cloud.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    <description>A Jar-based For Micro Service Base On Spring Cloud</description>
     <distributionManagement>
         <repository>
             <id>rdc-releases</id>
@@ -123,30 +132,28 @@
             <url>https://repo.rdc.aliyun.com/repository/78206-snapshot-KU78CE/</url>
         </snapshotRepository>
     </distributionManagement>
+    <groupId>org.cloud.microservice</groupId>
+    <modelVersion>4.0.0</modelVersion>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <skip>true</skip>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>cert</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
-                    </nonFilteredFileExtensions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <name>business</name>
+
+    <packaging>jar</packaging>
+
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <relativePath />
+        <version>2.1.6.RELEASE</version> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+    </properties>
+
+    <version>0.0.2-RELEASE</version>
 
 </project>
