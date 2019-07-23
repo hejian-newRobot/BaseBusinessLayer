@@ -1,5 +1,6 @@
 package org.cloud.microservice.business.config;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,7 +13,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
 
@@ -24,29 +24,26 @@ import java.io.IOException;
 @ConfigurationProperties(prefix = "spring.security.jwt.cert")
 public class JwtConfig {
 
-    private final JwtAccessTokenConverter jwtAccessTokenConverter;
     /**
      * 公钥名称
      */
     private String pub = "public.cert";
 
-    @Autowired
-    public JwtConfig(JwtAccessTokenConverter jwtAccessTokenConverter) {
-        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
-    }
-
     @Primary
     @Scope("singleton")
     @Bean("tokenStore")
     public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter(jwtAccessTokenConverter));
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
-    private JwtAccessTokenConverter jwtAccessTokenConverter(JwtAccessTokenConverter converter) {
+    @Bean
+    @Primary
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         Resource resource = new ClassPathResource(pub);
         String publicKey;
         try {
-            publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+            publicKey = IOUtils.toString(resource.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
