@@ -34,8 +34,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ConditionalOnClass({MybatisConfig.class, HikariDataSource.class, SqlSessionFactory.class})
-@ConditionalOnProperty(name = "datasource.cloud-his.enable", havingValue = "true",
-		matchIfMissing = true)
+@ConditionalOnProperty(name = "datasource.cloud-his.enable", havingValue = "true")
 @MapperScan(basePackages = "com.service.business.*.*.dao", sqlSessionTemplateRef =
 		"cloudHisDBSqlSessionTemplate")
 public class DataSourceConfigCloudHisForPMS {
