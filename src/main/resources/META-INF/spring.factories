@@ -3,7 +3,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.cloud.microservice.business.config.JwtConfig,\
 org.cloud.microservice.business.config.MybatisConfig,\
 org.cloud.microservice.business.config.WebFluxConfiguration,\
-org.cloud.microservice.business.config.DataSourceConfigForFsAppByCatering,\
+org.cloud.microservice.business.config.DataSourceConfigForHisUser,\
+org.cloud.microservice.business.config.DataSourceConfigForPMS,\
 org.cloud.microservice.business.config.SwaggerConfig,\
 org.cloud.microservice.business.config.ResourceServerConfiguration,\
 org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerTokenServicesConfiguration,\
