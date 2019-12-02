@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 /**
  * 项目名称：business-spring-boot-starter
  * 包名称:org.cloud.microservice.business.config
+ * datasource.hisuser.enable 是该配置的开关
  * 类描述：
  * 创建人：hejian
  * 创建时间：2019-12-02 08:58
