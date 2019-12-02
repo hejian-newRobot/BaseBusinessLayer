@@ -21,31 +21,36 @@ import javax.sql.DataSource;
 
 /**
  * 项目名称：business-spring-boot-starter
- * 包名称: org.cloud.microservice.business.config
- * 类描述：hisuser 库的数据源配置文件  datasource.hisuser.enable 是该配置的开关
- * 创建人：何健
+ * 包名称:org.cloud.microservice.business.config
+ * datasource.hisuser.enable 是该配置的开关
+ * 类描述：
+ * 创建人：hejian
+ * 创建时间：2019-12-02 08:58
+ * 修改人：hejian
+ * 修改时间：2019-12-02 08:58
+ * 修改备注：
  *
  * @author hejian
  */
 @Configuration
 @ConditionalOnClass({MybatisConfig.class, HikariDataSource.class, SqlSessionFactory.class})
-@ConditionalOnProperty(name = "datasource.hisuser.enable", havingValue = "true", matchIfMissing =
-		true)
+@ConditionalOnProperty(name = "datasource.cloud-his.enable", havingValue = "true",
+		matchIfMissing = true)
 @MapperScan(basePackages = "com.service.business.*.*.dao", sqlSessionTemplateRef =
-		"hisDBSqlSessionTemplate")
-public class DataSourceConfigForHisUser {
+		"cloudHisDBSqlSessionTemplate")
+public class DataSourceConfigCloudHisForPMS {
 
-	@Value("${ibatis.mapper.locations.hisuser}")
+	@Value("${ibatis.mapper.locations.cloud-his}")
 	private String mapperLocations;
 
-	@Bean(name = "hisDB")
-	@ConfigurationProperties(prefix = "datasource.hisuser")
-	public DataSource hisDataSource() {
+	@Bean(name = "cloudHisDB")
+	@ConfigurationProperties(prefix = "datasource.cloud-his")
+	public DataSource cloudHisDataSource() {
 		return DataSourceBuilder.create().type(HikariDataSource.class).build();
 	}
 
-	@Bean(name = "hisDBSqlSessionFactory")
-	public SqlSessionFactory hisSqlSessionFactory(@Qualifier("hisDB") DataSource dataSource) throws Exception {
+	@Bean(name = "cloudHisDBSqlSessionFactory")
+	public SqlSessionFactory cloudHisSqlSessionFactory(@Qualifier("cloudHisDB") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
 		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
@@ -53,16 +58,15 @@ public class DataSourceConfigForHisUser {
 		return bean.getObject();
 	}
 
-	@Bean(name = "hisDBTransactionManager")
-	public DataSourceTransactionManager hisTransactionManager(@Qualifier("hisDB") DataSource dataSource) {
+	@Bean(name = "cloudHisDBTransactionManager")
+	public DataSourceTransactionManager cloudHisTransactionManager(@Qualifier("cloudHisDB") DataSource dataSource) {
 		return new DataSourceTransactionManager(dataSource);
 	}
 
-	@Bean(name = "hisDBSqlSessionTemplate")
-	public SqlSessionTemplate hisSqlSessionTemplate(
-			@Qualifier("hisDBSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+	@Bean(name = "cloudHisDBSqlSessionTemplate")
+	public SqlSessionTemplate cloudHisSqlSessionTemplate(
+			@Qualifier("cloudHisDBSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 
 }
-

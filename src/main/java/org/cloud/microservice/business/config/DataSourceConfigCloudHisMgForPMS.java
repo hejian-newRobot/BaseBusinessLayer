@@ -22,34 +22,34 @@ import javax.sql.DataSource;
 /**
  * 项目名称：business-spring-boot-starter
  * 包名称:org.cloud.microservice.business.config
- * datasource.hisuser.enable 是该配置的开关
  * 类描述：
  * 创建人：hejian
- * 创建时间：2019-12-02 08:58
+ * 创建时间：2019-12-02 10:47
  * 修改人：hejian
- * 修改时间：2019-12-02 08:58
+ * 修改时间：2019-12-02 10:47
  * 修改备注：
  *
  * @author hejian
  */
 @Configuration
 @ConditionalOnClass({MybatisConfig.class, HikariDataSource.class, SqlSessionFactory.class})
-@ConditionalOnProperty(name = "datasource.pms.enable", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "datasource.cloud-his-mg.enable", havingValue = "true",
+		matchIfMissing = true)
 @MapperScan(basePackages = "com.service.business.*.*.dao", sqlSessionTemplateRef =
-		"pmsDBSqlSessionTemplate")
-public class DataSourceConfigForPMS {
+		"cloudHisMgDBSqlSessionTemplate")
+public class DataSourceConfigCloudHisMgForPMS {
 
-	@Value("${ibatis.mapper.locations.pms}")
+	@Value("${ibatis.mapper.locations.cloud-his-mg}")
 	private String mapperLocations;
 
-	@Bean(name = "pmsDB")
-	@ConfigurationProperties(prefix = "datasource.pms")
-	public DataSource fsAppByCateringDataSource() {
+	@Bean(name = "cloudHisMgDB")
+	@ConfigurationProperties(prefix = "datasource.cloud-his-mg")
+	public DataSource cloudHisMgDataSource() {
 		return DataSourceBuilder.create().type(HikariDataSource.class).build();
 	}
 
-	@Bean(name = "pmsDBSqlSessionFactory")
-	public SqlSessionFactory fsAppByCateringSqlSessionFactory(@Qualifier("pmsDB") DataSource dataSource) throws Exception {
+	@Bean(name = "cloudHisMgDBSqlSessionFactory")
+	public SqlSessionFactory cloudHisMgSqlSessionFactory(@Qualifier("cloudHisMgDB") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
 		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
@@ -57,14 +57,14 @@ public class DataSourceConfigForPMS {
 		return bean.getObject();
 	}
 
-	@Bean(name = "pmsDBTransactionManager")
-	public DataSourceTransactionManager fsAppByCateringTransactionManager(@Qualifier("pmsDB") DataSource dataSource) {
+	@Bean(name = "cloudHisMgDBTransactionManager")
+	public DataSourceTransactionManager cloudHisMgTransactionManager(@Qualifier("cloudHisMgDB") DataSource dataSource) {
 		return new DataSourceTransactionManager(dataSource);
 	}
 
-	@Bean(name = "pmsDBSqlSessionTemplate")
-	public SqlSessionTemplate pmsSqlSessionTemplate(
-			@Qualifier("pmsDBSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+	@Bean(name = "cloudHisMgDBSqlSessionTemplate")
+	public SqlSessionTemplate cloudHisMgSqlSessionTemplate(
+			@Qualifier("cloudHisMgDBSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 
