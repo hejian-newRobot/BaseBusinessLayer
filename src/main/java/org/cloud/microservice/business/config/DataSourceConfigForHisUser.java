@@ -30,7 +30,7 @@ import javax.sql.DataSource;
 @Configuration
 @ConditionalOnClass({MybatisConfig.class, HikariDataSource.class, SqlSessionFactory.class})
 @ConditionalOnProperty(name = "datasource.hisuser.enable", havingValue = "true")
-@MapperScan(basePackages = "com.service.business.*.*.dao", sqlSessionTemplateRef =
+@MapperScan(basePackages = "com.vdf.pms.*.*.dao", sqlSessionTemplateRef =
 		"hisDBSqlSessionTemplate")
 public class DataSourceConfigForHisUser {
 
